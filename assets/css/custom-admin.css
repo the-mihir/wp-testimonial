@@ -1,0 +1,44 @@
+.wrap {
+    margin: 20px;
+}
+.bg-primary {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%) !important;
+}
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+.rating-stars {
+    display: inline-flex;
+    gap: 2px;
+}
+.star {
+    color: #ddd;
+    font-size: 14px;
+}
+.star.active {
+    color: #ffc107;
+}
+.btn-outline-primary {
+    border-color: #4e73df;
+    color: #4e73df;
+}
+.btn-outline-primary:hover {
+    background-color: #4e73df;
+    color: white;
+}
+.btn-outline-danger {
+    border-color: #e74a3b;
+    color: #e74a3b;
+}
+.btn-outline-danger:hover {
+    background-color: #e74a3b;
+    color: white;
+}
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

@@ -37,7 +37,6 @@ function tsp_enqueue_admin_assets($hook) {
 }
 add_action('admin_enqueue_scripts', 'tsp_enqueue_admin_assets');
 
-
 register_activation_hook(__FILE__, 'tsp_create_testimonials_table');
 
 function tsp_enqueue_frontend_assets() {
@@ -53,28 +52,27 @@ function tsp_enqueue_frontend_assets() {
 }
 add_action('wp_enqueue_scripts', 'tsp_enqueue_frontend_assets');
 
-
-
-
-
-
 function tsp_create_testimonials_table() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'testimonials';
     $charset_collate = $wpdb->get_charset_collate();
 
-    $sql = "CREATE TABLE $table_name (
-        id mediumint(9) NOT NULL AUTO_INCREMENT,
-        name varchar(255) NOT NULL,
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        name varchar(100) NOT NULL,
+        position varchar(100),
+        company varchar(100),
+        rating tinyint(1) DEFAULT 5,
         content text NOT NULL,
-        created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        image_url varchar(255),
+        created_at timestamp DEFAULT CURRENT_TIMESTAMP,
+        updated_at timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (id)
     ) $charset_collate;";
 
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
     dbDelta($sql);
 }
-
 
 function tsp_testimonial_slider_shortcode() {
     // Get testimonials from the database
@@ -84,33 +82,54 @@ function tsp_testimonial_slider_shortcode() {
     }
 
     // Start the Swiper slider container
-    $output = '<div class="swiper-container">';
+    $output = '<div class="swiper-container container">';
     $output .= '<div class="swiper-wrapper">';
 
     // Loop through the testimonials and add them to the Swiper slider
     foreach ($testimonials as $testimonial) {
         $output .= '<div class="swiper-slide">';
         $output .= '<div class="testimonial-card">';
-        $output .= '<p class="testimonial-content">' . esc_html($testimonial['content']) . '</p>';
-        $output .= '<p class="testimonial-name">- ' . esc_html($testimonial['name']) . '</p>';
-        $output .= '</div>';
-        $output .= '</div>';
+        
+        // Image
+        if (!empty($testimonial->image_url)) {
+            $output .= sprintf(
+                '<img src="%s" alt="%s" class="testimonial-image">',
+                esc_url($testimonial->image_url),
+                esc_attr(sprintf(__('Photo of %s', 'testimonial-slider-pro'), $testimonial->name))
+            );
+        }
+
+        // Content
+        $output .= sprintf('<p class="testimonial-content">%s</p>', esc_html($testimonial->content));
+        
+        // Rating
+        $output .= '<div class="rating">';
+        for ($i = 1; $i <= 5; $i++) {
+            $star_class = $i <= $testimonial->rating ? 'active' : '';
+            $output .= sprintf('<span class="star %s"><i class="fas fa-star"></i></span>', $star_class);
+        }
+        
+        // Author info
+        $output .= sprintf('<p class="testimonial-name">%s</p>', esc_html($testimonial->name));
+        if (!empty($testimonial->position)) {
+            $output .= sprintf('<p class="testimonial-position">%s</p>', esc_html($testimonial->position));
+        }
+        if (!empty($testimonial->company)) {
+            $output .= sprintf('<p class="testimonial-company">%s</p>', esc_html($testimonial->company));
+        }
+
+        $output .= '</div>'; // Close rating div
+        $output .= '</div>'; // Close testimonial-card
+        $output .= '</div>'; // Close swiper-slide
     }
-    
 
     // End the Swiper slider container
     $output .= '</div>';  // End swiper-wrapper
     $output .= '<div class="swiper-pagination"></div>';
-    // $output .= '<div class="swiper-button-next"></div>';
-    // $output .= '<div class="swiper-button-prev"></div>';
+    $output .= '<div class="swiper-button-next"></div>';
+    $output .= '<div class="swiper-button-prev"></div>';
     $output .= '</div>';  // End swiper-container
 
-    $output .= '<div class="swiper-button-container">';
-    $output .= '<div class="swiper-button-prev"></div>';
-    $output .= '<div class="swiper-button-next"></div>';
-    $output .= '</div>';
-   
     return $output;
-    
 }
 add_shortcode('testimonial_slider', 'tsp_testimonial_slider_shortcode');

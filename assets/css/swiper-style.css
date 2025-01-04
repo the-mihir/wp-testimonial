@@ -1,46 +1,87 @@
-/* Style for the Swiper container */
 .swiper-container {
     width: 100%;
     margin: 0 auto;
-    overflow:hidden;
+    overflow: hidden;
 }
 
-/* Style for the testimonial card */
 .testimonial-card {
-    margin: 15px;
-    width: 350px;
-    min-height:400px;
-    padding: 25px;
-    background: #ffffff;
-    border-radius: 30px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Box shadow */
+    margin:15px;
+    padding: 30px;
     text-align: center;
+    transition: transform 0.3s;
+    cursor: pointer;
 }
 
-/* Style for testimonial content */
+.testimonial-image {
+    width: 100px !important;  /* Corrected from !im to !important */
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.testimonial-card:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+}
+
+
 .testimonial-content {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-/* Style for testimonial name */
-.testimonial-name {
-    font-weight: bold;
-    font-size: 1.1rem;
+    font-style: italic;
+    margin: 15px 0;
     color: #555;
 }
-.swiper-button-container {
+
+.rating {
+    margin: 10px 0;
+}
+
+.star {
+    color: #ddd; /* Inactive star color */
+    font-size: 20px;
+}
+
+.star.active {
+    color: #ffc107; /* Active star color */
+}
+
+.testimonial-name {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.testimonial-position,
+.testimonial-company {
+    font-size: 0.9em;
+    color: #777;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
     position: absolute;
     bottom: 0;
-    width: 150px;
-    display: flex;
-    justify-content: center;
+    margin: auto;
+    width: 50px; /* Set width */
+    height: 50px; /* Set height */
+    background-color: red; /* Red background */
+    border-radius: 50%; /* Full circle */
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    color: white; /* Icon color */
+    font-size: 20px; /* Icon size */
+    z-index: 10; /* Ensure buttons are above other content */
 
 }
 
-.swiper-button-prev.swiper-button-next{
-    padding: 50px;
-    border: 1px solid red;
-
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    font-size: 20px; /* Adjust icon size */
+    color: white; /* Icon color */
 }
+
