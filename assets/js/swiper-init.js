@@ -4,13 +4,28 @@ document.addEventListener('DOMContentLoaded', function () {
         slidesPerView: 3,
         spaceBetween: 15,
         autoplay: {
-            delay: 5000, // Delay in milliseconds between slides (5 seconds)
-            disableOnInteraction: false, // Keep autoplay running even when interacting with the slider
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1, 
+                spaceBetween: 10, 
+            },
+            768: {
+                slidesPerView: 1,
+                spaceBetween: 15, 
+            },
+            1024: {
+                slidesPerView: 3, 
+                spaceBetween: 20,
+            }
         },
         navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: '.testimonial-right',
+            prevEl: '.testimonial-left'
         },
-       
     });
+
 });
+

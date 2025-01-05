@@ -25,9 +25,37 @@ $testimonials = tsp_get_all_testimonials();
                 </a>
             </div>
 
+
+            <div class="alert alert-info mb-4">
+                <h5 class="mb-2"><i class="fas fa-code me-2"></i>Shortcode</h5>
+                <p class="mb-2">Use this shortcode to display the testimonial slider on any page or post:</p>
+                <code class="bg-light p-2">[testimonial_slider]</code>
+                <button class="btn btn-primary btn-sm copy-shortcode" data-shortcode="[testimonial_slider]">
+                    <i class="fas fa-copy"></i>
+                </button>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const copyButton = document.querySelector('.copy-shortcode');
+                    copyButton.addEventListener('click', function() {
+                        const shortcode = this.getAttribute('data-shortcode');
+                        navigator.clipboard.writeText(shortcode).then(function() {
+                            // Temporarily change button text to show feedback
+                            const originalText = copyButton.textContent;
+                            copyButton.textContent = 'Copied!';
+                            setTimeout(function() {
+                                copyButton.textContent = originalText;
+                            }, 2000);
+                        }).catch(function(err) {
+                            console.error('Failed to copy text: ', err);
+                        });
+                    });
+                });
+            </script>
+            </div>
+
             <?php if (!empty($testimonials)) : ?>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover border">
                         <thead class="bg-light">
                             <tr>
                                 <th class="px-4">SL</th>

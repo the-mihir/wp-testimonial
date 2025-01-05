@@ -124,11 +124,22 @@ function tsp_testimonial_slider_shortcode() {
     }
 
     // End the Swiper slider container
-    $output .= '</div>';  // End swiper-wrapper
-    $output .= '<div class="swiper-pagination"></div>';
-    $output .= '<div class="swiper-button-next"></div>';
-    $output .= '<div class="swiper-button-prev"></div>';
-    $output .= '</div>';  // End swiper-container
+    
+    // Custom navigation buttons
+    $output .= '<div class="testimonial-button-container">';
+    $output .= '</div>';
+    $output .= '</div>';
+    // make a div for the navigation buttons
+    $output .= '<div class="navigation-buttons">';
+    $output.= '<div class="arrow-buttons">';
+    $output .= '<div class="testimonial-left">';
+    $output .= '<img src="' . plugins_url('assets/images/left.png', __FILE__) . '" alt="Previous" class="" />';
+    $output .= '</div>';
+    $output .= '<div class="testimonial-right">';
+    $output .= '<img src="' . plugins_url('assets/images/right.png', __FILE__) . '" alt="Next" class="" />';
+    $output .= '</div>';
+    $output .= '</div>';
+    $output .= '</div>'; // End SliderParents
 
     return $output;
 }
